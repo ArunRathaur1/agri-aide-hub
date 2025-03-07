@@ -1,6 +1,5 @@
-
 import { useState } from 'react';
-import { Plant, Microscope, Leaf, AlertTriangle, ThumbsUp, Gauge } from 'lucide-react';
+import { Leaf, Microscope, AlertTriangle, ThumbsUp, Gauge } from 'lucide-react';
 import Layout from '@/components/Layout';
 import ImageUploader from '@/components/ImageUploader';
 import { 
@@ -58,7 +57,7 @@ const CropHealth = () => {
               <Card>
                 <CardHeader className="pb-3">
                   <CardTitle className="flex items-center text-xl">
-                    <Plant className="h-5 w-5 mr-2 text-primary" />
+                    <Leaf className="h-5 w-5 mr-2 text-primary" />
                     How It Works
                   </CardTitle>
                   <CardDescription>

@@ -1,7 +1,7 @@
 
 import { useEffect } from 'react';
 import { useToast } from "@/hooks/use-toast";
-import { Farm, BarChart3, FileText, Image, ShoppingBag } from 'lucide-react';
+import { Leaf, BarChart3, FileText, Image, ShoppingBag } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import Layout from '@/components/Layout';
@@ -87,7 +87,7 @@ const Index = () => {
                 <div className="space-y-6">
                   <div className="flex items-center space-x-4">
                     <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-primary-foreground">
-                      <Farm className="h-6 w-6" />
+                      <Leaf className="h-6 w-6" />
                     </div>
                     <div>
                       <h4 className="font-medium">Crop Analysis Dashboard</h4>
