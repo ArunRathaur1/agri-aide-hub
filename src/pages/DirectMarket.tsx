@@ -167,6 +167,48 @@ const DirectMarket = () => {
     },
   ];
 
+   const rentalItems = [
+     {
+       title: "Heavy-Duty Tractor",
+       price: "₹5,000/day",
+       quantity: "5 available",
+       location: "Nagpur, Maharashtra",
+       seller: "Agri Equipment Rentals",
+       image:
+         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVvn3Kj1qeTa8Y7iuJ8D52xVQOroCZCJCqbw&s",
+       category: "Tractor",
+     },
+     {
+       title: "Transport Truck",
+       price: "₹10,000/day",
+       quantity: "3 available",
+       location: "Ludhiana, Punjab",
+       seller: "Punjab Logistics",
+       image:
+         "https://5.imimg.com/data5/SELLER/Default/2020/10/SD/WM/NW/115809247/full-load-service-500x500.jpg",
+       category: "Truck",
+     },
+     {
+       title: "Combine Harvester",
+       price: "₹8,000/day",
+       quantity: "2 available",
+       location: "Indore, Madhya Pradesh",
+       seller: "Central Farm Rentals",
+       image:
+         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQQX8rltk_k5N7CUgcA7Bf5TtG_TIp0RJI4w&s",
+       category: "Harvester",
+     },
+     {
+       title: "Plowing Machine",
+       price: "₹3,500/day",
+       quantity: "10 available",
+       location: "Kanpur, Uttar Pradesh",
+       seller: "UP Farm Equipment",
+       image: "https://i.ytimg.com/vi/uFXwdX9qQG4/maxresdefault.jpg",
+       category: "Plowing Machine",
+     },
+   ];
+
   const handleListProduct = () => {
     toast({
       title: "Coming Soon!",
@@ -179,9 +221,12 @@ const DirectMarket = () => {
       <section className="py-12 pt-24 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <h1 className="text-3xl font-bold tracking-tight">Direct Market Access</h1>
+            <h1 className="text-3xl font-bold tracking-tight">
+              Direct Market Access
+            </h1>
             <p className="mt-4 text-lg text-muted-foreground">
-              Connect directly with consumers and industries to sell your produce without intermediaries
+              Connect directly with consumers and industries to sell your
+              produce without intermediaries
             </p>
           </div>
 
@@ -195,8 +240,19 @@ const DirectMarket = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
               <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4 text-muted-foreground"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
                 </svg>
               </div>
             </div>
@@ -206,7 +262,8 @@ const DirectMarket = () => {
           </div>
 
           <Tabs defaultValue="consumer">
-            <TabsList className="grid w-full grid-cols-2 mb-8">
+            {/* Tabs List */}
+            <TabsList className="flex w-full justify-between mb-8">
               <TabsTrigger value="consumer" className="flex items-center gap-2">
                 <Users className="h-4 w-4" />
                 <span>Consumer Market</span>
@@ -215,8 +272,16 @@ const DirectMarket = () => {
                 <Building className="h-4 w-4" />
                 <span>Industry Supply</span>
               </TabsTrigger>
+              <TabsTrigger
+                value="equipment"
+                className="flex items-center gap-2"
+              >
+                <Building className="h-4 w-4" />
+                <span>Equipment Rental</span>
+              </TabsTrigger>
             </TabsList>
-            
+
+            {/* Tab Content */}
             <TabsContent value="consumer" className="mt-0">
               <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {consumerItems.map((item, index) => (
@@ -224,10 +289,18 @@ const DirectMarket = () => {
                 ))}
               </div>
             </TabsContent>
-            
+
             <TabsContent value="industry" className="mt-0">
               <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {industryItems.map((item, index) => (
+                  <MarketplaceItem key={index} {...item} />
+                ))}
+              </div>
+            </TabsContent>
+
+            <TabsContent value="equipment" className="mt-0">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {rentalItems.map((item, index) => (
                   <MarketplaceItem key={index} {...item} />
                 ))}
               </div>
@@ -237,8 +310,13 @@ const DirectMarket = () => {
           <div className="mt-12 p-6 bg-muted rounded-lg">
             <div className="flex flex-col md:flex-row items-center justify-between gap-6">
               <div className="text-center md:text-left">
-                <h3 className="text-lg font-medium">Need Transportation for Your Goods?</h3>
-                <p className="text-muted-foreground mt-2">Connect with local logistics providers to transport your produce.</p>
+                <h3 className="text-lg font-medium">
+                  Need Transportation for Your Goods?
+                </h3>
+                <p className="text-muted-foreground mt-2">
+                  Connect with local logistics providers to transport your
+                  produce.
+                </p>
               </div>
               <Button variant="outline" className="flex items-center gap-2">
                 <Truck className="h-4 w-4" />
