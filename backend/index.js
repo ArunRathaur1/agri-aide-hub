@@ -5,7 +5,7 @@ const cors = require('cors');
 
 const farmerRoutes = require('./routes/farmerRoutes');
 const sellerRoutes = require('./routes/sellerRoutes');
-
+const landRoutes=require('./routes/landRoutes');
 const app = express();
 
 // Middleware
@@ -23,6 +23,7 @@ mongoose.connect(
 // Routes
 app.use('/api/farmers', farmerRoutes);
 app.use('/api/sellers', sellerRoutes);
+app.use('/api/land',landRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

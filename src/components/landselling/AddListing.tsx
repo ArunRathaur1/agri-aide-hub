@@ -15,27 +15,32 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { ExternalLink, Plus } from "lucide-react";
 import "leaflet/dist/leaflet.css";
+import { toast } from "@/components/ui/use-toast";
 
 interface AddListingProps {
   activeTab: string;
   onAddListing: (listing: Omit<LandListing, "id">) => void;
+  onListingAdded: () => void;
 }
 
 export default function AddListing({
   activeTab,
   onAddListing,
+  onListingAdded,
 }: AddListingProps) {
   const locationMapRef = useRef<L.Map | null>(null);
   const locationMapContainerRef = useRef<HTMLDivElement>(null);
   const locationMarkerRef = useRef<L.Marker | null>(null);
   const [isLocationMapInitialized, setIsLocationMapInitialized] =
     useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [newListing, setNewListing] = useState<Omit<LandListing, "id">>({
     title: "",
     description: "",
     price: 0,
     area: 0,
     location: [20.5937, 78.9629],
+    createdAt: new Date().toISOString(),
   });
 
   useEffect(() => {
@@ -120,12 +125,85 @@ export default function AddListing({
       price: 0,
       area: 0,
       location: [20.5937, 78.9629],
+      createdAt: new Date().toISOString(),
     });
   };
 
-  const handleAddListing = () => {
-    onAddListing(newListing);
-    handleReset();
+  const saveListing = async (listing: Omit<LandListing, "id">) => {
+    try {
+      setIsSubmitting(true);
+      const response = await fetch("http://localhost:5000/api/land/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(listing),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+
+      const savedListing = await response.json();
+      console.log("Listing saved successfully:", savedListing);
+      return savedListing;
+    } catch (error) {
+      console.error("Failed to save listing:", error);
+      throw error;
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const validateListing = (listing: Omit<LandListing, "id">) => {
+    if (!listing.title.trim()) return "Title is required";
+    if (!listing.description.trim()) return "Description is required";
+    if (listing.price <= 0) return "Price must be greater than zero";
+    if (listing.area <= 0) return "Area must be greater than zero";
+    return null;
+  };
+
+  const handleAddListing = async () => {
+    // Update the timestamp to the current time
+    const listingToAdd = {
+      ...newListing,
+      createdAt: new Date().toISOString(),
+    };
+
+    const validationError = validateListing(listingToAdd);
+    if (validationError) {
+      toast({
+        title: "Validation Error",
+        description: validationError,
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      // First save to API
+      await saveListing(listingToAdd);
+
+      // Then notify parent component
+      onAddListing(listingToAdd);
+
+      // Reset form
+      handleReset();
+
+      // Trigger refresh of listings
+      if (onListingAdded) onListingAdded();
+
+      toast({
+        title: "Success",
+        description: "Land listing added successfully!",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to add listing. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -145,6 +223,7 @@ export default function AddListing({
             placeholder="e.g., Fertile Farmland near Pune"
             value={newListing.title}
             onChange={handleInputChange}
+            required
           />
         </div>
 
@@ -157,6 +236,7 @@ export default function AddListing({
             rows={4}
             value={newListing.description}
             onChange={handleInputChange}
+            required
           />
         </div>
 
@@ -170,6 +250,8 @@ export default function AddListing({
               placeholder="Enter price in rupees"
               value={newListing.price || ""}
               onChange={handleInputChange}
+              required
+              min="1"
             />
           </div>
           <div className="space-y-2">
@@ -181,6 +263,9 @@ export default function AddListing({
               placeholder="Land area in acres"
               value={newListing.area || ""}
               onChange={handleInputChange}
+              required
+              min="0.1"
+              step="0.1"
             />
           </div>
         </div>
@@ -254,12 +339,22 @@ export default function AddListing({
         </div>
       </CardContent>
       <CardFooter className="bg-muted/30 flex justify-between">
-        <Button variant="ghost" onClick={handleReset}>
+        <Button variant="ghost" onClick={handleReset} disabled={isSubmitting}>
           Reset
         </Button>
-        <Button onClick={handleAddListing} className="gap-1">
-          <Plus className="h-4 w-4" />
-          Add Listing
+        <Button
+          onClick={handleAddListing}
+          className="gap-1"
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? (
+            "Saving..."
+          ) : (
+            <>
+              <Plus className="h-4 w-4" />
+              Add Listing
+            </>
+          )}
         </Button>
       </CardFooter>
     </Card>
