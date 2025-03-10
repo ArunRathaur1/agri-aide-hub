@@ -48,33 +48,33 @@
   }
 
   .dark {
-    --background: 20 10% 10%;
-    --foreground: 40 20% 96%;
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
 
-    --card: 20 10% 12%;
-    --card-foreground: 40 20% 96%;
+    --card: 222 47% 14%;
+    --card-foreground: 210 40% 98%;
 
-    --popover: 20 10% 12%;
-    --popover-foreground: 40 20% 96%;
+    --popover: 222 47% 14%;
+    --popover-foreground: 210 40% 98%;
 
-    --primary: 130 25% 39%;
+    --primary: 142 72% 29%;
     --primary-foreground: 0 0% 98%;
 
-    --secondary: 120 10% 25%;
-    --secondary-foreground: 40 20% 96%;
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 210 40% 98%;
 
-    --muted: 20 10% 20%;
-    --muted-foreground: 40 10% 70%;
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
 
-    --accent: 210 25% 40%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 217 33% 20%;
+    --accent-foreground: 210 40% 98%;
 
     --destructive: 0 62% 30%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive-foreground: 210 40% 98%;
 
-    --border: 20 10% 20%;
-    --input: 20 10% 20%;
-    --ring: 120 30% 39%;
+    --border: 217 33% 20%;
+    --input: 217 33% 20%;
+    --ring: 142 72% 29%;
   }
 
   * {
@@ -102,6 +102,19 @@
   
   ::-webkit-scrollbar-thumb:hover {
     @apply bg-muted-foreground/50;
+  }
+
+  /* Dark mode specific styles */
+  .dark .glass-panel {
+    @apply bg-black/40 backdrop-blur-md border border-white/10 shadow-sm;
+  }
+  
+  .dark .glass-card {
+    @apply bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl p-6 transition-all duration-300 hover:shadow-md;
+  }
+  
+  .dark .feature-chip {
+    @apply bg-primary text-primary-foreground;
   }
 }
 

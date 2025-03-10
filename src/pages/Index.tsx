@@ -26,28 +26,32 @@ const Index = () => {
       title: "Crop Price Estimation",
       description: "Get accurate price forecasts based on your land, resources, and market trends using our AI algorithms.",
       chip: "AI-Powered",
-      link: "/price-estimation"
+      link: "/price-estimation",
+      imageSrc: "https://images.unsplash.com/photo-1589923188900-85e82f468bc2?w=800&auto=format&fit=crop&q=60"
     },
     {
       icon: <FileText className="h-6 w-6" />,
       title: "Government Schemes",
       description: "Stay updated with the latest agricultural schemes, subsidies, and loan offers from government agencies.",
       chip: "Updated Weekly",
-      link: "/government-schemes"
+      link: "/government-schemes",
+      imageSrc: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&auto=format&fit=crop&q=60"
     },
     {
       icon: <Image className="h-6 w-6" />,
       title: "Crop Health Analysis",
       description: "Upload images of your crops and receive instant health assessments and treatment recommendations.",
       chip: "Computer Vision",
-      link: "/crop-health"
+      link: "/crop-health",
+      imageSrc: "https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=800&auto=format&fit=crop&q=60"
     },
     {
       icon: <ShoppingBag className="h-6 w-6" />,
       title: "Direct Market Access",
       description: "Connect directly with consumers and industries to sell your produce without intermediaries.",
       chip: "Marketplace",
-      link: "/direct-market"
+      link: "/direct-market",
+      imageSrc: "https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=800&auto=format&fit=crop&q=60"
     }
   ];
 
@@ -72,6 +76,7 @@ const Index = () => {
                   title={feature.title}
                   description={feature.description}
                   chip={feature.chip}
+                  imageSrc={feature.imageSrc}
                 />
               </Link>
             ))}
@@ -79,8 +84,15 @@ const Index = () => {
         </div>
       </section>
       
-      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-muted/50">
-        <div className="container mx-auto">
+      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-muted/50 relative">
+        <div className="absolute inset-0 z-0 opacity-10">
+          <img 
+            src="https://images.unsplash.com/photo-1523741543316-beb7fc7023d8?w=1920&auto=format&fit=crop&q=20" 
+            alt="Background" 
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="container mx-auto relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="order-2 lg:order-1">
               <div className="glass-panel rounded-2xl p-8 animate-float">
@@ -95,10 +107,21 @@ const Index = () => {
                     </div>
                   </div>
                   
-                  <div className="space-y-4">
-                    <div className="h-4 bg-muted rounded-full w-full"></div>
-                    <div className="h-4 bg-muted rounded-full w-3/4"></div>
-                    <div className="h-4 bg-muted rounded-full w-1/2"></div>
+                  <div className="relative h-32 bg-black/5 dark:bg-white/5 rounded-lg overflow-hidden">
+                    <img 
+                      src="https://images.unsplash.com/photo-1590682681863-ea9b85a2b0f3?w=800&auto=format&fit=crop&q=80" 
+                      alt="Crop field analysis" 
+                      className="w-full h-full object-cover opacity-80"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent to-background/70 flex items-end justify-end p-3">
+                      <div className="w-16 h-16 rounded-lg overflow-hidden border-2 border-primary/20">
+                        <img 
+                          src="https://images.unsplash.com/photo-1599148149030-32b927de297a?w=300&auto=format&fit=crop&q=80" 
+                          alt="Crop closeup" 
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    </div>
                   </div>
                   
                   <div className="grid grid-cols-3 gap-4">
@@ -107,7 +130,7 @@ const Index = () => {
                       <div className="text-xs text-muted-foreground">Health</div>
                     </div>
                     <div className="p-4 rounded-lg bg-agri-blue/10 flex flex-col items-center">
-                      <div className="text-lg font-medium">$12.4</div>
+                      <div className="text-lg font-medium">₹12.4</div>
                       <div className="text-xs text-muted-foreground">Price/kg</div>
                     </div>
                     <div className="p-4 rounded-lg bg-agri-brown/10 flex flex-col items-center">
@@ -154,8 +177,15 @@ const Index = () => {
         </div>
       </section>
 
-      <section className="py-24 px-4 sm:px-6 lg:px-8">
-        <div className="container mx-auto text-center max-w-4xl">
+      <section className="py-24 px-4 sm:px-6 lg:px-8 relative">
+        <div className="absolute inset-0 z-0 opacity-5">
+          <img 
+            src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1920&auto=format&fit=crop&q=20" 
+            alt="Background" 
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="container mx-auto text-center max-w-4xl relative z-10">
           <h2 className="section-title">Ready to Transform Your Farming?</h2>
           <p className="section-subtitle">
             Join thousands of farmers already using our platform to increase productivity and profitability

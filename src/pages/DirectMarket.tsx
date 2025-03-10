@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { ShoppingBag, Users, Building, Truck } from 'lucide-react';
 import Layout from '@/components/Layout';
@@ -48,9 +47,13 @@ const MarketplaceItem = ({
         <div className="absolute top-2 right-2">
           <Badge variant="secondary">{category}</Badge>
         </div>
-        <div className="w-full h-full flex items-center justify-center text-muted-foreground">
-          <ShoppingBag className="h-12 w-12" />
-        </div>
+        {image ? (
+          <img src={image} alt={title} className="w-full h-full object-cover" />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center text-muted-foreground">
+            <ShoppingBag className="h-12 w-12" />
+          </div>
+        )}
       </div>
       <CardHeader className="pb-2">
         <CardTitle className="text-xl">{title}</CardTitle>
@@ -85,7 +88,7 @@ const DirectMarket = () => {
       quantity: "500 kg available",
       location: "Bangalore, Karnataka",
       seller: "Krishna Farms",
-      image: "",
+      image: "https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?w=800&auto=format&fit=crop&q=80",
       category: "Grains"
     },
     {
@@ -94,7 +97,7 @@ const DirectMarket = () => {
       quantity: "200 kg available",
       location: "Pune, Maharashtra",
       seller: "Sunshine Organics",
-      image: "",
+      image: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=800&auto=format&fit=crop&q=80",
       category: "Vegetables"
     },
     {
@@ -103,7 +106,7 @@ const DirectMarket = () => {
       quantity: "50 dozen available",
       location: "Ratnagiri, Maharashtra",
       seller: "Coastal Orchards",
-      image: "",
+      image: "https://images.unsplash.com/photo-1553279768-865429fa0078?w=800&auto=format&fit=crop&q=80",
       category: "Fruits"
     },
     {
@@ -112,7 +115,7 @@ const DirectMarket = () => {
       quantity: "1000 kg available",
       location: "Ludhiana, Punjab",
       seller: "Punjab Agro Farms",
-      image: "",
+      image: "https://images.unsplash.com/photo-1631209121750-a9f656d28f46?w=800&auto=format&fit=crop&q=80",
       category: "Grains"
     }
   ];
@@ -124,7 +127,7 @@ const DirectMarket = () => {
       quantity: "10 tons available",
       location: "Ahmedabad, Gujarat",
       seller: "Gujarat Cotton Cooperative",
-      image: "",
+      image: "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?w=800&auto=format&fit=crop&q=80",
       category: "Fiber"
     },
     {
@@ -133,7 +136,7 @@ const DirectMarket = () => {
       quantity: "100 tons available",
       location: "Kolhapur, Maharashtra",
       seller: "Kolhapur Agro Industries",
-      image: "",
+      image: "https://images.unsplash.com/photo-1488415032361-b7e238421f1b?w=800&auto=format&fit=crop&q=80",
       category: "Sugar Crops"
     },
     {
@@ -142,7 +145,7 @@ const DirectMarket = () => {
       quantity: "5000 kg available",
       location: "Agra, Uttar Pradesh",
       seller: "UP Potato Farms",
-      image: "",
+      image: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=800&auto=format&fit=crop&q=80",
       category: "Vegetables"
     },
     {
@@ -151,7 +154,7 @@ const DirectMarket = () => {
       quantity: "15 tons available",
       location: "Indore, Madhya Pradesh",
       seller: "Central India Farmers Association",
-      image: "",
+      image: "https://images.unsplash.com/photo-1599861543314-76cfe238d8a5?w=800&auto=format&fit=crop&q=80",
       category: "Oil Seeds"
     }
   ];
