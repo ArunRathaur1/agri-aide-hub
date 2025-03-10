@@ -3,7 +3,6 @@ const Farmer = require('../models/Farmer');
 
 const router = express.Router();
 
-// Create a Farmer
 router.post('/', async (req, res) => {
     try {
         const farmer = new Farmer(req.body);
@@ -14,7 +13,6 @@ router.post('/', async (req, res) => {
     }
 });
 
-// Get all Farmers
 router.get('/', async (req, res) => {
     try {
         const farmers = await Farmer.find();
@@ -23,8 +21,6 @@ router.get('/', async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
-
-// Get a single Farmer by ID
 router.get('/:id', async (req, res) => {
     try {
         const farmer = await Farmer.findById(req.params.id);
@@ -35,7 +31,6 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-// Update a Farmer
 router.put('/:id', async (req, res) => {
     try {
         const farmer = await Farmer.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -45,7 +40,6 @@ router.put('/:id', async (req, res) => {
     }
 });
 
-// Delete a Farmer
 router.delete('/:id', async (req, res) => {
     try {
         await Farmer.findByIdAndDelete(req.params.id);
