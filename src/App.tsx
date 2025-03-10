@@ -11,6 +11,7 @@ import PriceEstimation from "./pages/PriceEstimation";
 import GovernmentSchemes from "./pages/GovernmentSchemes";
 import CropHealth from "./pages/CropHealth";
 import DirectMarket from "./pages/DirectMarket";
+import Landselling from "./pages/Landselling";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ const App = () => (
             <Route path="/government-schemes" element={<GovernmentSchemes />} />
             <Route path="/crop-health" element={<CropHealth />} />
             <Route path="/direct-market" element={<DirectMarket />} />
+            <Route path='/landselling' element={<Landselling></Landselling>}></Route>
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

@@ -18,6 +18,7 @@ const Navbar = () => {
     { name: 'Government Schemes', path: '/government-schemes' },
     { name: 'Crop Health', path: '/crop-health' },
     { name: 'Direct Market', path: '/direct-market' },
+    {name:'Land',path:'/landselling'}
   ];
 
   const isActive = (path: string) => {
