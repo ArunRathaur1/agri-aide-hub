@@ -6,12 +6,23 @@ interface FeatureCardProps {
   title: string;
   description: string;
   chip?: string;
+  imageSrc?: string;
 }
 
-const FeatureCard = ({ icon, title, description, chip }: FeatureCardProps) => {
+const FeatureCard = ({ icon, title, description, chip, imageSrc }: FeatureCardProps) => {
   return (
-    <div className="glass-card group">
-      <div className="flex flex-col h-full">
+    <div className="glass-card group relative overflow-hidden">
+      {imageSrc && (
+        <div className="absolute inset-0 z-0">
+          <img 
+            src={imageSrc} 
+            alt={title} 
+            className="w-full h-full object-cover opacity-20 group-hover:opacity-30 transition-opacity duration-300"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent"></div>
+        </div>
+      )}
+      <div className="flex flex-col h-full relative z-10">
         {chip && (
           <div className="mb-4">
             <span className="feature-chip">{chip}</span>

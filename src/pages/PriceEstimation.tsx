@@ -2,12 +2,21 @@
 import { BarChart, TrendingUp, LineChart, DollarSign } from 'lucide-react';
 import Layout from '@/components/Layout';
 import PriceCalculator from '@/components/PriceCalculator';
+import RotatingCube from '@/components/RotatingCube';
 
 const PriceEstimation = () => {
   return (
     <Layout>
-      <div className="pt-28 pb-16 px-4 sm:px-6 lg:px-8">
-        <div className="container mx-auto">
+      <div className="pt-28 pb-16 px-4 sm:px-6 lg:px-8 relative">
+        <div className="absolute inset-0 z-0 opacity-5">
+          <img 
+            src="https://images.unsplash.com/photo-1503139739043-2a47d2f1fea1?w=1920&auto=format&fit=crop&q=20" 
+            alt="Background" 
+            className="w-full h-full object-cover"
+          />
+        </div>
+        
+        <div className="container mx-auto relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-16 animate-fade-in-down">
             <h1 className="text-4xl font-semibold mb-4">Crop Price Estimation</h1>
             <p className="text-lg text-muted-foreground">
@@ -69,7 +78,10 @@ const PriceEstimation = () => {
                 </div>
               </div>
               
-              <div className="mt-8 p-5 rounded-xl bg-muted/50 border border-border/50">
+              <div className="mt-8 p-5 rounded-xl bg-muted/50 border border-border/50 relative overflow-hidden">
+                <div className="absolute right-0 top-0 w-24 h-24 opacity-50">
+                  <RotatingCube />
+                </div>
                 <h3 className="font-medium mb-3">Did you know?</h3>
                 <p className="text-sm text-muted-foreground">
                   Farmers who use price estimation tools can increase their profit margins by up to 15% by timing their market entry more strategically.

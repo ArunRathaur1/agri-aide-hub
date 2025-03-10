@@ -8,6 +8,7 @@ const HeroSection = () => {
     <div className="relative min-h-[90vh] flex items-center">
       {/* Background elements */}
       <div className="absolute inset-0 z-0 overflow-hidden">
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?w=1920&auto=format&fit=crop&q=20')] bg-cover bg-center opacity-5"></div>
         <div className="absolute right-0 bottom-0 w-1/3 h-1/3 bg-gradient-to-tl from-agri-green/20 to-transparent rounded-full blur-3xl transform translate-x-1/4 translate-y-1/4"></div>
         <div className="absolute left-0 top-0 w-1/3 h-1/3 bg-gradient-to-br from-agri-blue/20 to-transparent rounded-full blur-3xl transform -translate-x-1/4 -translate-y-1/4"></div>
       </div>
@@ -43,8 +44,15 @@ const HeroSection = () => {
             
             <div className="flex items-center gap-x-8 gap-y-4 flex-wrap">
               <div className="flex -space-x-2">
-                {[...Array(4)].map((_, i) => (
-                  <div key={i} className="w-8 h-8 rounded-full border-2 border-background bg-muted"></div>
+                {[
+                  "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&auto=format&fit=crop&q=60",
+                  "https://images.unsplash.com/photo-1607990283143-e81e7a2c9349?w=100&auto=format&fit=crop&q=60",
+                  "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=100&auto=format&fit=crop&q=60",
+                  "https://images.unsplash.com/photo-1622281953819-e1b36b928122?w=100&auto=format&fit=crop&q=60"
+                ].map((src, i) => (
+                  <div key={i} className="w-9 h-9 rounded-full border-2 border-background overflow-hidden">
+                    <img src={src} alt={`User ${i+1}`} className="w-full h-full object-cover" />
+                  </div>
                 ))}
               </div>
               <p className="text-sm text-muted-foreground">
@@ -55,15 +63,20 @@ const HeroSection = () => {
           
           <div className="relative animate-fade-in">
             <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-muted">
+              <img 
+                src="https://images.unsplash.com/photo-1625244724120-1fd1d34d00f6?w=800&auto=format&fit=crop&q=80" 
+                alt="Farmer with technology" 
+                className="w-full h-full object-cover opacity-80"
+              />
               <div className="absolute inset-0 bg-gradient-to-br from-agri-green/10 to-agri-blue/10"></div>
               <div className="glass-panel rounded-2xl p-6 shadow-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 animate-float">
                 <div className="space-y-4">
                   <div className="w-full h-32 bg-agri-green/10 rounded-lg flex items-center justify-center">
-                    <div className="w-24 h-24 rounded-full bg-agri-green/20 flex items-center justify-center">
-                      <div className="w-16 h-16 rounded-full bg-agri-green/30 flex items-center justify-center">
-                        <div className="w-10 h-10 rounded-full bg-primary"></div>
-                      </div>
-                    </div>
+                    <img 
+                      src="https://images.unsplash.com/photo-1621958443248-2c2b394c4c04?w=400&auto=format&fit=crop&q=80" 
+                      alt="Crop Analysis" 
+                      className="w-24 h-24 rounded-full object-cover"
+                    />
                   </div>
                   <div className="space-y-2">
                     <div className="h-4 bg-muted rounded-full w-3/4"></div>
