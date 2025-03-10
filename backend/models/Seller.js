@@ -7,7 +7,7 @@ const sellerSchema = new mongoose.Schema({
     products: [
         {
             name: { type: String, required: true },  // Product name
-            image: { type: String, required: false }, // Image URL for the product
+            // image: { type: String, required: false }, // Image URL for the product
             leaseOptions: [
                 {
                     duration: String,  // Lease duration (e.g., "6 months", "1 year")
