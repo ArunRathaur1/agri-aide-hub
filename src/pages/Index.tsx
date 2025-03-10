@@ -186,11 +186,11 @@ const Index = () => {
                 ))}
               </ul>
 
-              <div className="pt-6">
+              {/* <div className="pt-6">
                 <Button asChild className="rounded-full">
                   <Link to="/price-estimation">Get Started Now</Link>
                 </Button>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
