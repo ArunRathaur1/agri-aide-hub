@@ -88,8 +88,9 @@ const DirectMarket = () => {
       quantity: "500 kg available",
       location: "Bangalore, Karnataka",
       seller: "Krishna Farms",
-      image: "https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?w=800&auto=format&fit=crop&q=80",
-      category: "Grains"
+      image:
+        "https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?w=800&auto=format&fit=crop&q=80",
+      category: "Grains",
     },
     {
       title: "Fresh Tomatoes",
@@ -97,8 +98,9 @@ const DirectMarket = () => {
       quantity: "200 kg available",
       location: "Pune, Maharashtra",
       seller: "Sunshine Organics",
-      image: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=800&auto=format&fit=crop&q=80",
-      category: "Vegetables"
+      image:
+        "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=800&auto=format&fit=crop&q=80",
+      category: "Vegetables",
     },
     {
       title: "Alphonso Mangoes",
@@ -106,8 +108,9 @@ const DirectMarket = () => {
       quantity: "50 dozen available",
       location: "Ratnagiri, Maharashtra",
       seller: "Coastal Orchards",
-      image: "https://images.unsplash.com/photo-1553279768-865429fa0078?w=800&auto=format&fit=crop&q=80",
-      category: "Fruits"
+      image:
+        "https://images.unsplash.com/photo-1553279768-865429fa0078?w=800&auto=format&fit=crop&q=80",
+      category: "Fruits",
     },
     {
       title: "Organic Wheat",
@@ -115,9 +118,10 @@ const DirectMarket = () => {
       quantity: "1000 kg available",
       location: "Ludhiana, Punjab",
       seller: "Punjab Agro Farms",
-      image: "https://images.unsplash.com/photo-1631209121750-a9f656d28f46?w=800&auto=format&fit=crop&q=80",
-      category: "Grains"
-    }
+      image:
+        "https://5.imimg.com/data5/SELLER/Default/2023/5/310043896/VX/HT/NI/156804476/organic-wheat-for-food-industries.webp",
+      category: "Grains",
+    },
   ];
 
   const industryItems = [
@@ -127,8 +131,9 @@ const DirectMarket = () => {
       quantity: "10 tons available",
       location: "Ahmedabad, Gujarat",
       seller: "Gujarat Cotton Cooperative",
-      image: "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?w=800&auto=format&fit=crop&q=80",
-      category: "Fiber"
+      image:
+        "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?w=800&auto=format&fit=crop&q=80",
+      category: "Fiber",
     },
     {
       title: "Sugarcane for Processing",
@@ -136,8 +141,9 @@ const DirectMarket = () => {
       quantity: "100 tons available",
       location: "Kolhapur, Maharashtra",
       seller: "Kolhapur Agro Industries",
-      image: "https://images.unsplash.com/photo-1488415032361-b7e238421f1b?w=800&auto=format&fit=crop&q=80",
-      category: "Sugar Crops"
+      image:
+        "https://www.saferack.com/wp-content/uploads/2022/11/sugarcane-being-harvested.webp",
+      category: "Sugar Crops",
     },
     {
       title: "Bulk Potatoes for Chips",
@@ -145,8 +151,9 @@ const DirectMarket = () => {
       quantity: "5000 kg available",
       location: "Agra, Uttar Pradesh",
       seller: "UP Potato Farms",
-      image: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=800&auto=format&fit=crop&q=80",
-      category: "Vegetables"
+      image:
+        "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=800&auto=format&fit=crop&q=80",
+      category: "Vegetables",
     },
     {
       title: "Soybean for Oil Extraction",
@@ -154,9 +161,10 @@ const DirectMarket = () => {
       quantity: "15 tons available",
       location: "Indore, Madhya Pradesh",
       seller: "Central India Farmers Association",
-      image: "https://images.unsplash.com/photo-1599861543314-76cfe238d8a5?w=800&auto=format&fit=crop&q=80",
-      category: "Oil Seeds"
-    }
+      image:
+        "https://www.sunrisefoods.com/wp-content/uploads/2020/11/soybean-oil-2.jpg",
+      category: "Oil Seeds",
+    },
   ];
 
   const handleListProduct = () => {
