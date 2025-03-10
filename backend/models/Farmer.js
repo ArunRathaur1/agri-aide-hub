@@ -3,10 +3,16 @@ const mongoose = require('mongoose');
 const farmerSchema = new mongoose.Schema({
     name: { type: String, required: true },
     area: { type: String, required: true },
-    landArea: { type: Number, required: true }, // in acres
-    phone: { type: String, required: true, unique: true }
-}, { timestamps: true });
+    landArea: { type: Number, required: true },
+    phone: { type: String, required: true, unique: true },
+    farmingHistory: [
+        {
+            cropName: String,
+            costIncurred: Number,
+            profitEarned: Number,
+            cultivationDate: Date
+        }
+    ]
+});
 
-const Farmer = mongoose.model('Farmer', farmerSchema);
-
-module.exports = Farmer;
+module.exports = mongoose.model('Farmer', farmerSchema);
