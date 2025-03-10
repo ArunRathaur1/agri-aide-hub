@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import { LandListing, getGoogleMapsUrl } from "@/types/landselling";
-import { ExternalLink, MapPin } from "lucide-react";
+import { ExternalLink, MapPin, Search, Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -11,17 +11,98 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import {
+  Slider,
+  SliderTrack,
+  SliderRange,
+  SliderThumb,
+} from "@/components/ui/slider";
+import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
 import "leaflet/dist/leaflet.css"; // Import Leaflet CSS
 
 interface MapViewProps {
-  listings: LandListing[];
   activeTab: string;
 }
 
-export default function MapView({ listings, activeTab }: MapViewProps) {
+export default function MapView({ activeTab }: MapViewProps) {
+  const [listings, setListings] = useState<LandListing[]>([]);
+  const [filteredListings, setFilteredListings] = useState<LandListing[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Filter states
+  const [searchTitle, setSearchTitle] = useState("");
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000000]);
+  const [areaRange, setAreaRange] = useState<[number, number]>([0, 5000]);
+  const [maxPrice, setMaxPrice] = useState(1000000);
+  const [maxArea, setMaxArea] = useState(5000);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+
   const mainMapRef = useRef<L.Map | null>(null);
   const mainMapContainerRef = useRef<HTMLDivElement>(null);
-  const [isMainMapInitialized, setIsMainMapInitialized] = React.useState(false);
+  const [isMainMapInitialized, setIsMainMapInitialized] = useState(false);
+
+  // Fetch listings from API
+  useEffect(() => {
+    const fetchListings = async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch("http://localhost:5000/api/land/");
+
+        if (!response.ok) {
+          throw new Error(`Failed to fetch listings: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setListings(data);
+        setFilteredListings(data);
+
+        // Set max values for filters based on data
+        if (data.length > 0) {
+          const maxP = Math.max(
+            ...data.map((listing: LandListing) => listing.price)
+          );
+          const maxA = Math.max(
+            ...data.map((listing: LandListing) => listing.area)
+          );
+          setMaxPrice(maxP);
+          setMaxArea(maxA);
+          setPriceRange([0, maxP]);
+          setAreaRange([0, maxA]);
+        }
+
+        setIsLoading(false);
+      } catch (err) {
+        setError(
+          err instanceof Error ? err.message : "An unknown error occurred"
+        );
+        setIsLoading(false);
+      }
+    };
+
+    fetchListings();
+  }, []);
+
+  // Apply filters effect
+  useEffect(() => {
+    if (listings.length === 0) return;
+
+    const filtered = listings.filter((listing) => {
+      const titleMatch = listing.title
+        .toLowerCase()
+        .includes(searchTitle.toLowerCase());
+      const priceMatch =
+        listing.price >= priceRange[0] && listing.price <= priceRange[1];
+      const areaMatch =
+        listing.area >= areaRange[0] && listing.area <= areaRange[1];
+
+      return titleMatch && priceMatch && areaMatch;
+    });
+
+    setFilteredListings(filtered);
+  }, [searchTitle, priceRange, areaRange, listings]);
 
   // Initialize the main map (once)
   useEffect(() => {
@@ -52,10 +133,10 @@ export default function MapView({ listings, activeTab }: MapViewProps) {
     };
   }, [mainMapContainerRef.current, activeTab]);
 
-  // Update main map markers when listings change
+  // Update main map markers when filtered listings change
   useEffect(() => {
     updateMainMapMarkers();
-  }, [listings]);
+  }, [filteredListings, activeTab]);
 
   // Effect to handle visible tab resizing
   useEffect(() => {
@@ -79,7 +160,7 @@ export default function MapView({ listings, activeTab }: MapViewProps) {
     });
 
     // Add markers for each listing
-    listings.forEach((listing) => {
+    filteredListings.forEach((listing) => {
       const googleMapsUrl = getGoogleMapsUrl(listing.location);
 
       L.marker(listing.location)
@@ -96,38 +177,142 @@ export default function MapView({ listings, activeTab }: MapViewProps) {
           mainMapRef.current?.setView(listing.location, 12);
         });
     });
+
+    // If we have listings and the map is initialized, fit bounds
+    if (filteredListings.length > 0 && mainMapRef.current) {
+      const bounds = L.latLngBounds(
+        filteredListings.map((l) => L.latLng(l.location[0], l.location[1]))
+      );
+      mainMapRef.current.fitBounds(bounds, { padding: [50, 50] });
+    }
+  };
+
+  // Format currency for display
+  const formatCurrency = (value: number) => {
+    return `₹${value.toLocaleString()}`;
   };
 
   return (
     <Card className={activeTab !== "map" ? "hidden" : ""}>
       <CardHeader>
-        <CardTitle>Land Listings Map</CardTitle>
-        <CardDescription>
-          Browse available agricultural land for sale. Click on markers to view
-          details.
-        </CardDescription>
+        <div className="flex items-center justify-between">
+          <div>
+            <CardTitle>Land Listings Map</CardTitle>
+            <CardDescription>
+              Browse available agricultural land for sale. Click on markers to
+              view details.
+            </CardDescription>
+          </div>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setIsFilterOpen(!isFilterOpen)}
+          >
+            <Filter className="h-4 w-4 mr-2" />
+            {isFilterOpen ? "Hide Filters" : "Show Filters"}
+          </Button>
+        </div>
+
+        {isFilterOpen && (
+          <div className="mt-4 space-y-4 p-4 bg-muted/30 rounded-md">
+            <div>
+              <Label htmlFor="search-title">Search by Title</Label>
+              <div className="relative">
+                <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+                <Input
+                  id="search-title"
+                  placeholder="Search listings..."
+                  className="pl-8"
+                  value={searchTitle}
+                  onChange={(e) => setSearchTitle(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div>
+              <Label className="mb-1 block">
+                Price Range: {formatCurrency(priceRange[0])} -{" "}
+                {formatCurrency(priceRange[1])}
+              </Label>
+              <Slider
+                defaultValue={[0, maxPrice]}
+                max={maxPrice}
+                step={1000}
+                value={priceRange}
+                onValueChange={(value) =>
+                  setPriceRange(value as [number, number])
+                }
+                className="mb-4"
+              />
+            </div>
+
+            <div>
+              <Label className="mb-1 block">
+                Area Range: {areaRange[0]} - {areaRange[1]} acres
+              </Label>
+              <Slider
+                defaultValue={[0, maxArea]}
+                max={maxArea}
+                step={10}
+                value={areaRange}
+                onValueChange={(value) =>
+                  setAreaRange(value as [number, number])
+                }
+              />
+            </div>
+
+            <div className="flex justify-between">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setSearchTitle("");
+                  setPriceRange([0, maxPrice]);
+                  setAreaRange([0, maxArea]);
+                }}
+              >
+                Reset Filters
+              </Button>
+
+              <Badge variant="secondary">
+                {filteredListings.length} of {listings.length} listings shown
+              </Badge>
+            </div>
+          </div>
+        )}
       </CardHeader>
+
       <CardContent>
-        {/* Map container with fixed height */}
-        <div
-          ref={mainMapContainerRef}
-          className="h-96 w-full rounded-md border"
-        ></div>
+        {isLoading ? (
+          <div className="h-96 w-full flex items-center justify-center bg-muted/20 rounded-md">
+            <p>Loading map and listings...</p>
+          </div>
+        ) : error ? (
+          <div className="h-96 w-full flex items-center justify-center bg-destructive/20 rounded-md">
+            <p className="text-destructive">Error: {error}</p>
+          </div>
+        ) : (
+          <div
+            ref={mainMapContainerRef}
+            className="h-96 w-full rounded-md border"
+          />
+        )}
       </CardContent>
+
       <CardFooter className="bg-muted/30">
         <div className="w-full">
           <p className="text-sm text-muted-foreground mb-2">
             <MapPin className="h-4 w-4 inline mr-1" />
-            {listings.length} listing{listings.length !== 1 ? "s" : ""}{" "}
-            available
+            {filteredListings.length} listing
+            {filteredListings.length !== 1 ? "s" : ""} available
           </p>
-          {listings.length > 0 && (
+          {filteredListings.length > 0 && (
             <div className="mt-2 space-y-2">
               <p className="text-sm font-medium">Recent Listings:</p>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-                {listings.slice(-3).map((listing) => (
+                {filteredListings.slice(-3).map((listing, idx) => (
                   <Button
-                    key={listing.id}
+                    key={listing.id || idx}
                     variant="outline"
                     className="h-auto py-2 justify-start text-left"
                     onClick={() => {
