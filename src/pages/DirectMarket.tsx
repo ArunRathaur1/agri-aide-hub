@@ -45,15 +45,11 @@ const MarketplaceItem = ({
   return (
     <Card className="overflow-hidden transition-all hover:shadow-md">
       <div className="relative h-48 bg-muted">
-        {image ? (
-          <img src={image} alt={title} className="w-full h-full object-cover" />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center text-muted-foreground">
-            <ShoppingBag className="h-12 w-12" />
-          </div>
-        )}
         <div className="absolute top-2 right-2">
-          <Badge variant="secondary" className="bg-background/80 backdrop-blur-sm">{category}</Badge>
+          <Badge variant="secondary">{category}</Badge>
+        </div>
+        <div className="w-full h-full flex items-center justify-center text-muted-foreground">
+          <ShoppingBag className="h-12 w-12" />
         </div>
       </div>
       <CardHeader className="pb-2">
@@ -89,7 +85,7 @@ const DirectMarket = () => {
       quantity: "500 kg available",
       location: "Bangalore, Karnataka",
       seller: "Krishna Farms",
-      image: "https://images.unsplash.com/photo-1586201375761-83865001e8c7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      image: "",
       category: "Grains"
     },
     {
@@ -98,7 +94,7 @@ const DirectMarket = () => {
       quantity: "200 kg available",
       location: "Pune, Maharashtra",
       seller: "Sunshine Organics",
-      image: "https://images.unsplash.com/photo-1592841200221-a6894f98a474?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      image: "",
       category: "Vegetables"
     },
     {
@@ -107,7 +103,7 @@ const DirectMarket = () => {
       quantity: "50 dozen available",
       location: "Ratnagiri, Maharashtra",
       seller: "Coastal Orchards",
-      image: "https://images.unsplash.com/photo-1591073113125-e46713c829ed?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80",
+      image: "",
       category: "Fruits"
     },
     {
@@ -116,7 +112,7 @@ const DirectMarket = () => {
       quantity: "1000 kg available",
       location: "Ludhiana, Punjab",
       seller: "Punjab Agro Farms",
-      image: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      image: "",
       category: "Grains"
     }
   ];
@@ -128,7 +124,7 @@ const DirectMarket = () => {
       quantity: "10 tons available",
       location: "Ahmedabad, Gujarat",
       seller: "Gujarat Cotton Cooperative",
-      image: "https://images.unsplash.com/photo-1581252584466-d5422becb582?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      image: "",
       category: "Fiber"
     },
     {
@@ -137,7 +133,7 @@ const DirectMarket = () => {
       quantity: "100 tons available",
       location: "Kolhapur, Maharashtra",
       seller: "Kolhapur Agro Industries",
-      image: "https://images.unsplash.com/photo-1598887041310-35ddf24f5c63?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      image: "",
       category: "Sugar Crops"
     },
     {
@@ -146,7 +142,7 @@ const DirectMarket = () => {
       quantity: "5000 kg available",
       location: "Agra, Uttar Pradesh",
       seller: "UP Potato Farms",
-      image: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      image: "",
       category: "Vegetables"
     },
     {
@@ -155,7 +151,7 @@ const DirectMarket = () => {
       quantity: "15 tons available",
       location: "Indore, Madhya Pradesh",
       seller: "Central India Farmers Association",
-      image: "https://images.unsplash.com/photo-1599661046289-e3ac5527e7b6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1631&q=80",
+      image: "",
       category: "Oil Seeds"
     }
   ];
@@ -169,16 +165,8 @@ const DirectMarket = () => {
 
   return (
     <Layout>
-      <section className="py-12 pt-24 px-4 sm:px-6 lg:px-8 relative">
-        <div className="absolute inset-0 pointer-events-none">
-          <img 
-            src="https://images.unsplash.com/photo-1523741543316-beb7fc7023d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" 
-            alt="Agricultural market background"
-            className="object-cover w-full h-full opacity-5"
-          />
-        </div>
-        
-        <div className="container mx-auto relative z-10">
+      <section className="py-12 pt-24 px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <h1 className="text-3xl font-bold tracking-tight">Direct Market Access</h1>
             <p className="mt-4 text-lg text-muted-foreground">

@@ -2,28 +2,8 @@
 import { ArrowRight } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Link } from 'react-router-dom';
-import { useEffect, useRef } from 'react';
 
 const HeroSection = () => {
-  const orbitRef = useRef<HTMLDivElement>(null);
-  
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!orbitRef.current) return;
-      
-      const x = (window.innerWidth / 2 - e.clientX) / 25;
-      const y = (window.innerHeight / 2 - e.clientY) / 25;
-      
-      orbitRef.current.style.transform = `rotateX(${y}deg) rotateY(${x}deg)`;
-    };
-    
-    window.addEventListener('mousemove', handleMouseMove);
-    
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, []);
-  
   return (
     <div className="relative min-h-[90vh] flex items-center">
       {/* Background elements */}
@@ -73,41 +53,21 @@ const HeroSection = () => {
             </div>
           </div>
           
-          <div className="relative animate-fade-in perspective">
-            <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-muted relative">
-              <img 
-                src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" 
-                alt="Green agricultural field" 
-                className="absolute inset-0 w-full h-full object-cover opacity-40"
-              />
+          <div className="relative animate-fade-in">
+            <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-muted">
               <div className="absolute inset-0 bg-gradient-to-br from-agri-green/10 to-agri-blue/10"></div>
-              
-              <div ref={orbitRef} className="preserve-3d transition-transform duration-200 absolute inset-0 flex items-center justify-center">
-                <div className="glass-panel rounded-2xl p-6 shadow-lg w-4/5 animate-float z-20">
-                  <div className="space-y-4">
-                    <div className="w-full h-32 bg-agri-green/10 rounded-lg flex items-center justify-center">
-                      <div className="rotating-element w-24 h-24 rounded-full bg-agri-green/20 flex items-center justify-center">
-                        <div className="w-16 h-16 rounded-full bg-agri-green/30 flex items-center justify-center">
-                          <div className="w-10 h-10 rounded-full bg-primary"></div>
-                        </div>
+              <div className="glass-panel rounded-2xl p-6 shadow-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 animate-float">
+                <div className="space-y-4">
+                  <div className="w-full h-32 bg-agri-green/10 rounded-lg flex items-center justify-center">
+                    <div className="w-24 h-24 rounded-full bg-agri-green/20 flex items-center justify-center">
+                      <div className="w-16 h-16 rounded-full bg-agri-green/30 flex items-center justify-center">
+                        <div className="w-10 h-10 rounded-full bg-primary"></div>
                       </div>
                     </div>
-                    <div className="space-y-2">
-                      <div className="h-4 bg-muted rounded-full w-3/4"></div>
-                      <div className="h-4 bg-muted rounded-full w-1/2"></div>
-                    </div>
                   </div>
-                </div>
-                
-                <div className="absolute top-1/4 right-0 w-16 h-16 glass-panel rounded-full p-2 floating-element" style={{ animationDelay: '1s' }}>
-                  <div className="w-full h-full rounded-full bg-primary/30 flex items-center justify-center">
-                    <div className="w-8 h-8 rounded-full bg-primary/60"></div>
-                  </div>
-                </div>
-                
-                <div className="absolute bottom-1/4 left-0 w-12 h-12 glass-panel rounded-full p-2 floating-element" style={{ animationDelay: '2s' }}>
-                  <div className="w-full h-full rounded-full bg-accent/30 flex items-center justify-center">
-                    <div className="w-6 h-6 rounded-full bg-accent/60"></div>
+                  <div className="space-y-2">
+                    <div className="h-4 bg-muted rounded-full w-3/4"></div>
+                    <div className="h-4 bg-muted rounded-full w-1/2"></div>
                   </div>
                 </div>
               </div>

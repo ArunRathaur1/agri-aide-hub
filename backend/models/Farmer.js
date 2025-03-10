@@ -11,7 +11,7 @@ const farmerSchema = new mongoose.Schema({
             costIncurred: Number,
             profitEarned: Number,
             cultivationDate: Date
-        }     //klk
+        }
     ]
 });
 
