@@ -45,6 +45,10 @@
 /* Enhanced card hover effects */
 .glass-card {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .glass-card:hover {
@@ -112,4 +116,14 @@
 .animated-underline:hover::after {
   transform: scaleX(1);
   transform-origin: bottom left;
+}
+
+/* Feature chip styling */
+.feature-chip {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: 9999px;
+  background-color: rgba(var(--primary-rgb), 0.15);
+  color: hsl(var(--primary));
 }
