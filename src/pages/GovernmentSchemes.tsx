@@ -1,6 +1,5 @@
-
 import { useState } from 'react';
-import { FileText, Search, Filter, CreditCard, Sprout, BarChart3, Droplets, Tractor } from 'lucide-react';
+import { FileText, Search, CreditCard, Sprout, BarChart3, Droplets, Tractor } from 'lucide-react';
 import Layout from '@/components/Layout';
 import SchemeCard from '@/components/SchemeCard';
 import { Input } from "@/components/ui/input";
@@ -16,6 +15,7 @@ interface Scheme {
   category: string;
   type: string;
   icon: JSX.Element;
+  imageSrc?: string;
 }
 
 const schemes: Scheme[] = [
@@ -27,7 +27,8 @@ const schemes: Scheme[] = [
     deadline: "Ongoing",
     category: "Financial Support",
     type: "subsidy",
-    icon: <CreditCard className="h-6 w-6" />
+    icon: <CreditCard className="h-6 w-6" />,
+    imageSrc: "https://images.unsplash.com/photo-1601599561213-832382576750?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
   },
   {
     id: 2,
@@ -37,7 +38,8 @@ const schemes: Scheme[] = [
     deadline: "Dec 31, 2023",
     category: "Loan",
     type: "loan",
-    icon: <Sprout className="h-6 w-6" />
+    icon: <Sprout className="h-6 w-6" />,
+    imageSrc: "https://images.unsplash.com/photo-1615397349754-cfa2066a298e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80"
   },
   {
     id: 3,
@@ -47,7 +49,8 @@ const schemes: Scheme[] = [
     deadline: "Nov 15, 2023",
     category: "Grant",
     type: "grant",
-    icon: <BarChart3 className="h-6 w-6" />
+    icon: <BarChart3 className="h-6 w-6" />,
+    imageSrc: "https://images.unsplash.com/photo-1574943320219-361fd4d3f308?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1452&q=80"
   },
   {
     id: 4,
@@ -57,7 +60,8 @@ const schemes: Scheme[] = [
     deadline: "Feb 28, 2024",
     category: "Subsidy",
     type: "subsidy",
-    icon: <Droplets className="h-6 w-6" />
+    icon: <Droplets className="h-6 w-6" />,
+    imageSrc: "https://images.unsplash.com/photo-1509275831265-6eed6efbb721?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80"
   },
   {
     id: 5,
@@ -67,7 +71,8 @@ const schemes: Scheme[] = [
     deadline: "Jan 15, 2024",
     category: "Subsidy",
     type: "subsidy",
-    icon: <Tractor className="h-6 w-6" />
+    icon: <Tractor className="h-6 w-6" />,
+    imageSrc: "https://images.unsplash.com/photo-1563514227147-6d2ff665a9a5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80"
   },
   {
     id: 6,
@@ -77,7 +82,8 @@ const schemes: Scheme[] = [
     deadline: "Rolling Applications",
     category: "Grant",
     type: "grant",
-    icon: <Sprout className="h-6 w-6" />
+    icon: <Sprout className="h-6 w-6" />,
+    imageSrc: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
   },
   {
     id: 7,
@@ -87,7 +93,8 @@ const schemes: Scheme[] = [
     deadline: "Ongoing",
     category: "Loan",
     type: "loan",
-    icon: <CreditCard className="h-6 w-6" />
+    icon: <CreditCard className="h-6 w-6" />,
+    imageSrc: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
   },
   {
     id: 8,
@@ -97,7 +104,8 @@ const schemes: Scheme[] = [
     deadline: "Mar 31, 2024",
     category: "Subsidy",
     type: "subsidy",
-    icon: <Sprout className="h-6 w-6" />
+    icon: <Sprout className="h-6 w-6" />,
+    imageSrc: "https://images.unsplash.com/photo-1500651230702-0e2d8a49d4ad?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
   }
 ];
 
@@ -117,8 +125,16 @@ const GovernmentSchemes = () => {
 
   return (
     <Layout>
-      <div className="pt-28 pb-16 px-4 sm:px-6 lg:px-8">
-        <div className="container mx-auto">
+      <div className="pt-28 pb-16 px-4 sm:px-6 lg:px-8 relative">
+        <div className="absolute inset-0 pointer-events-none">
+          <img 
+            src="https://images.unsplash.com/photo-1504057522600-53c36b569284?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1491&q=80" 
+            alt="Agricultural background"
+            className="object-cover w-full h-full opacity-5"
+          />
+        </div>
+        
+        <div className="container mx-auto relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-16 animate-fade-in-down">
             <h1 className="text-4xl font-semibold mb-4">Government Schemes & Loans</h1>
             <p className="text-lg text-muted-foreground">
@@ -173,6 +189,7 @@ const GovernmentSchemes = () => {
                         deadline={scheme.deadline}
                         category={scheme.category}
                         icon={scheme.icon}
+                        imageSrc={scheme.imageSrc}
                       />
                     ))
                   ) : (
@@ -199,6 +216,7 @@ const GovernmentSchemes = () => {
                         deadline={scheme.deadline}
                         category={scheme.category}
                         icon={scheme.icon}
+                        imageSrc={scheme.imageSrc}
                       />
                     ))
                   ) : (
@@ -225,6 +243,7 @@ const GovernmentSchemes = () => {
                         deadline={scheme.deadline}
                         category={scheme.category}
                         icon={scheme.icon}
+                        imageSrc={scheme.imageSrc}
                       />
                     ))
                   ) : (
@@ -251,6 +270,7 @@ const GovernmentSchemes = () => {
                         deadline={scheme.deadline}
                         category={scheme.category}
                         icon={scheme.icon}
+                        imageSrc={scheme.imageSrc}
                       />
                     ))
                   ) : (

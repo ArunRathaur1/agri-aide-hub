@@ -11,6 +11,7 @@ interface SchemeCardProps {
   deadline: string;
   category: string;
   icon: ReactNode;
+  imageSrc?: string;
 }
 
 const SchemeCard = ({
@@ -19,10 +20,21 @@ const SchemeCard = ({
   description,
   deadline,
   category,
-  icon
+  icon,
+  imageSrc
 }: SchemeCardProps) => {
   return (
-    <div className="glass-card group">
+    <div className="glass-card group overflow-hidden">
+      {imageSrc && (
+        <div className="h-40 overflow-hidden -mx-6 -mt-6 mb-4 relative">
+          <img src={imageSrc} alt={title} className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background/80"></div>
+          <Badge variant="outline" className="absolute top-3 right-3 bg-background/80 backdrop-blur-sm">
+            {category}
+          </Badge>
+        </div>
+      )}
+      
       <div className="flex items-start gap-4">
         <div className="flex-shrink-0 p-3 rounded-full bg-primary/10 text-primary">
           {icon}
@@ -30,9 +42,11 @@ const SchemeCard = ({
         
         <div className="space-y-3 flex-1">
           <div>
-            <Badge variant="outline" className="mb-2">
-              {category}
-            </Badge>
+            {!imageSrc && (
+              <Badge variant="outline" className="mb-2">
+                {category}
+              </Badge>
+            )}
             <h3 className="text-xl font-medium group-hover:text-primary transition-colors">
               {title}
             </h3>

@@ -26,28 +26,32 @@ const Index = () => {
       title: "Crop Price Estimation",
       description: "Get accurate price forecasts based on your land, resources, and market trends using our AI algorithms.",
       chip: "AI-Powered",
-      link: "/price-estimation"
+      link: "/price-estimation",
+      imageSrc: "https://images.unsplash.com/photo-1591696331111-ef9586a5b17a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
     },
     {
       icon: <FileText className="h-6 w-6" />,
       title: "Government Schemes",
       description: "Stay updated with the latest agricultural schemes, subsidies, and loan offers from government agencies.",
       chip: "Updated Weekly",
-      link: "/government-schemes"
+      link: "/government-schemes",
+      imageSrc: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
     },
     {
       icon: <Image className="h-6 w-6" />,
       title: "Crop Health Analysis",
       description: "Upload images of your crops and receive instant health assessments and treatment recommendations.",
       chip: "Computer Vision",
-      link: "/crop-health"
+      link: "/crop-health",
+      imageSrc: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1332&q=80"
     },
     {
       icon: <ShoppingBag className="h-6 w-6" />,
       title: "Direct Market Access",
       description: "Connect directly with consumers and industries to sell your produce without intermediaries.",
       chip: "Marketplace",
-      link: "/direct-market"
+      link: "/direct-market",
+      imageSrc: "https://images.unsplash.com/photo-1488459716781-31db52582fe9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
     }
   ];
 
@@ -72,6 +76,7 @@ const Index = () => {
                   title={feature.title}
                   description={feature.description}
                   chip={feature.chip}
+                  imageSrc={feature.imageSrc}
                 />
               </Link>
             ))}
@@ -79,8 +84,16 @@ const Index = () => {
         </div>
       </section>
       
-      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-muted/50">
-        <div className="container mx-auto">
+      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-muted/50 relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <img 
+            src="https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+            alt="Agricultural background" 
+            className="object-cover w-full h-full opacity-10"
+          />
+        </div>
+        
+        <div className="container mx-auto relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="order-2 lg:order-1">
               <div className="glass-panel rounded-2xl p-8 animate-float">
@@ -154,8 +167,16 @@ const Index = () => {
         </div>
       </section>
 
-      <section className="py-24 px-4 sm:px-6 lg:px-8">
-        <div className="container mx-auto text-center max-w-4xl">
+      <section className="py-24 px-4 sm:px-6 lg:px-8 relative">
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <img 
+            src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+            alt="Rural farmland"
+            className="object-cover w-full h-full opacity-5"
+          />
+        </div>
+        
+        <div className="container mx-auto text-center max-w-4xl relative z-10">
           <h2 className="section-title">Ready to Transform Your Farming?</h2>
           <p className="section-subtitle">
             Join thousands of farmers already using our platform to increase productivity and profitability
