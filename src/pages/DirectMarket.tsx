@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { ShoppingBag, Users, Building, Truck } from 'lucide-react';
 import Layout from '@/components/Layout';
@@ -116,7 +115,7 @@ const DirectMarket = () => {
       quantity: "1000 kg available",
       location: "Ludhiana, Punjab",
       seller: "Punjab Agro Farms",
-      image: "https://images.unsplash.com/photo-1574323347407-f5e1c5a1ec21?w=800&auto=format&fit=crop&q=80",
+      image: "https://images.unsplash.com/photo-1631209121750-a9f656d28f46?w=800&auto=format&fit=crop&q=80",
       category: "Grains"
     }
   ];

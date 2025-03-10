@@ -87,7 +87,7 @@ const Index = () => {
       <section className="py-24 px-4 sm:px-6 lg:px-8 bg-muted/50 relative">
         <div className="absolute inset-0 z-0 opacity-10">
           <img 
-            src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=1920&auto=format&fit=crop&q=20" 
+            src="https://images.unsplash.com/photo-1523741543316-beb7fc7023d8?w=1920&auto=format&fit=crop&q=20" 
             alt="Background" 
             className="w-full h-full object-cover"
           />
@@ -107,10 +107,21 @@ const Index = () => {
                     </div>
                   </div>
                   
-                  <div className="space-y-4">
-                    <div className="h-4 bg-muted rounded-full w-full"></div>
-                    <div className="h-4 bg-muted rounded-full w-3/4"></div>
-                    <div className="h-4 bg-muted rounded-full w-1/2"></div>
+                  <div className="relative h-32 bg-black/5 dark:bg-white/5 rounded-lg overflow-hidden">
+                    <img 
+                      src="https://images.unsplash.com/photo-1590682681863-ea9b85a2b0f3?w=800&auto=format&fit=crop&q=80" 
+                      alt="Crop field analysis" 
+                      className="w-full h-full object-cover opacity-80"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent to-background/70 flex items-end justify-end p-3">
+                      <div className="w-16 h-16 rounded-lg overflow-hidden border-2 border-primary/20">
+                        <img 
+                          src="https://images.unsplash.com/photo-1599148149030-32b927de297a?w=300&auto=format&fit=crop&q=80" 
+                          alt="Crop closeup" 
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    </div>
                   </div>
                   
                   <div className="grid grid-cols-3 gap-4">
@@ -119,7 +130,7 @@ const Index = () => {
                       <div className="text-xs text-muted-foreground">Health</div>
                     </div>
                     <div className="p-4 rounded-lg bg-agri-blue/10 flex flex-col items-center">
-                      <div className="text-lg font-medium">$12.4</div>
+                      <div className="text-lg font-medium">₹12.4</div>
                       <div className="text-xs text-muted-foreground">Price/kg</div>
                     </div>
                     <div className="p-4 rounded-lg bg-agri-brown/10 flex flex-col items-center">
