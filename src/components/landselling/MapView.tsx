@@ -13,12 +13,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import {
-  Slider,
-  SliderTrack,
-  SliderRange,
-  SliderThumb,
-} from "@/components/ui/slider";
+import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { getListings } from "@/services/landListingService";
@@ -53,7 +48,9 @@ export default function MapView({ listings: propListings, activeTab }: MapViewPr
       try {
         setIsLoading(true);
         // First try to get listings from the API
-        const response = await fetch("http://localhost:5000/api/land/");
+        const response = await fetch("http://localhost:5000/api/land/", {
+          signal: AbortSignal.timeout(3000) // Timeout after 3 seconds
+        });
 
         if (!response.ok) {
           throw new Error(`Failed to fetch listings: ${response.status}`);
@@ -98,8 +95,24 @@ export default function MapView({ listings: propListings, activeTab }: MapViewPr
           setAreaRange([0, maxA]);
         } else {
           // If no data in local storage either, use prop listings
-          setListings(propListings);
-          setFilteredListings(propListings);
+          if (propListings && propListings.length > 0) {
+            setListings(propListings);
+            setFilteredListings(propListings);
+            
+            // Set max values for filters based on data
+            const maxP = Math.max(
+              ...propListings.map((listing) => listing.price)
+            );
+            const maxA = Math.max(
+              ...propListings.map((listing) => listing.area)
+            );
+            setMaxPrice(maxP);
+            setMaxArea(maxA);
+            setPriceRange([0, maxP]);
+            setAreaRange([0, maxA]);
+          } else {
+            setError("No listings available. Please add some listings first.");
+          }
         }
       } finally {
         setIsLoading(false);
