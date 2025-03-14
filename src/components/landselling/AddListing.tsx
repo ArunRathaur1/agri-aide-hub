@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import { LandListing, getGoogleMapsUrl } from "@/types/landselling";
@@ -20,7 +21,7 @@ import { toast } from "@/components/ui/use-toast";
 interface AddListingProps {
   activeTab: string;
   onAddListing: (listing: Omit<LandListing, "id">) => void;
-  onListingAdded: () => void;
+  onListingAdded?: () => void;
 }
 
 export default function AddListing({
@@ -40,13 +41,21 @@ export default function AddListing({
     price: 0,
     area: 0,
     location: [20.5937, 78.9629],
-    createdAt: new Date().toISOString(),
   });
 
   useEffect(() => {
     if (!locationMapContainerRef.current) return;
 
     if (activeTab === "add" && !isLocationMapInitialized) {
+      // Fix for Leaflet's icon
+      // Use default icon path in leaflet's assets folder
+      delete L.Icon.Default.prototype._getIconUrl;
+      L.Icon.Default.mergeOptions({
+        iconRetinaUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png',
+        iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
+        shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
+      });
+
       const mapInstance = L.map(locationMapContainerRef.current).setView(
         newListing.location,
         5
@@ -125,7 +134,6 @@ export default function AddListing({
       price: 0,
       area: 0,
       location: [20.5937, 78.9629],
-      createdAt: new Date().toISOString(),
     });
   };
 
@@ -164,10 +172,8 @@ export default function AddListing({
   };
 
   const handleAddListing = async () => {
-    // Update the timestamp to the current time
     const listingToAdd = {
       ...newListing,
-      createdAt: new Date().toISOString(),
     };
 
     const validationError = validateListing(listingToAdd);

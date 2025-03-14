@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import { LandListing, getGoogleMapsUrl } from "@/types/landselling";
@@ -20,15 +21,17 @@ import {
 } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
+import { getListings } from "@/services/landListingService";
 import "leaflet/dist/leaflet.css"; // Import Leaflet CSS
 
 interface MapViewProps {
+  listings: LandListing[];
   activeTab: string;
 }
 
-export default function MapView({ activeTab }: MapViewProps) {
-  const [listings, setListings] = useState<LandListing[]>([]);
-  const [filteredListings, setFilteredListings] = useState<LandListing[]>([]);
+export default function MapView({ listings: propListings, activeTab }: MapViewProps) {
+  const [listings, setListings] = useState<LandListing[]>(propListings || []);
+  const [filteredListings, setFilteredListings] = useState<LandListing[]>(propListings || []);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -44,11 +47,12 @@ export default function MapView({ activeTab }: MapViewProps) {
   const mainMapContainerRef = useRef<HTMLDivElement>(null);
   const [isMainMapInitialized, setIsMainMapInitialized] = useState(false);
 
-  // Fetch listings from API
+  // Fetch listings from API and fall back to local storage
   useEffect(() => {
     const fetchListings = async () => {
       try {
         setIsLoading(true);
+        // First try to get listings from the API
         const response = await fetch("http://localhost:5000/api/land/");
 
         if (!response.ok) {
@@ -56,6 +60,7 @@ export default function MapView({ activeTab }: MapViewProps) {
         }
 
         const data = await response.json();
+        // If we successfully got data from the API, use it
         setListings(data);
         setFilteredListings(data);
 
@@ -72,18 +77,37 @@ export default function MapView({ activeTab }: MapViewProps) {
           setPriceRange([0, maxP]);
           setAreaRange([0, maxA]);
         }
-
-        setIsLoading(false);
       } catch (err) {
-        setError(
-          err instanceof Error ? err.message : "An unknown error occurred"
-        );
+        console.warn("API fetch failed, falling back to local storage:", err);
+        // Fallback to local storage
+        const localStorageListings = getListings();
+        if (localStorageListings && localStorageListings.length > 0) {
+          setListings(localStorageListings);
+          setFilteredListings(localStorageListings);
+          
+          // Set max values for filters based on data
+          const maxP = Math.max(
+            ...localStorageListings.map((listing) => listing.price)
+          );
+          const maxA = Math.max(
+            ...localStorageListings.map((listing) => listing.area)
+          );
+          setMaxPrice(maxP);
+          setMaxArea(maxA);
+          setPriceRange([0, maxP]);
+          setAreaRange([0, maxA]);
+        } else {
+          // If no data in local storage either, use prop listings
+          setListings(propListings);
+          setFilteredListings(propListings);
+        }
+      } finally {
         setIsLoading(false);
       }
     };
 
     fetchListings();
-  }, []);
+  }, [propListings]);
 
   // Apply filters effect
   useEffect(() => {
@@ -110,6 +134,15 @@ export default function MapView({ activeTab }: MapViewProps) {
 
     // Only initialize map if it's not already initialized
     if (activeTab === "map" && !isMainMapInitialized) {
+      // Fix for Leaflet's icon
+      // Use default icon path in leaflet's assets folder
+      delete L.Icon.Default.prototype._getIconUrl;
+      L.Icon.Default.mergeOptions({
+        iconRetinaUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png',
+        iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
+        shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
+      });
+
       const mapInstance = L.map(mainMapContainerRef.current).setView(
         [20.5937, 78.9629],
         5
@@ -180,10 +213,16 @@ export default function MapView({ activeTab }: MapViewProps) {
 
     // If we have listings and the map is initialized, fit bounds
     if (filteredListings.length > 0 && mainMapRef.current) {
-      const bounds = L.latLngBounds(
-        filteredListings.map((l) => L.latLng(l.location[0], l.location[1]))
-      );
-      mainMapRef.current.fitBounds(bounds, { padding: [50, 50] });
+      try {
+        const bounds = L.latLngBounds(
+          filteredListings.map((l) => L.latLng(l.location[0], l.location[1]))
+        );
+        mainMapRef.current.fitBounds(bounds, { padding: [50, 50] });
+      } catch (e) {
+        console.error("Error fitting bounds:", e);
+        // Fallback to default view if bounds fitting fails
+        mainMapRef.current.setView([20.5937, 78.9629], 5);
+      }
     }
   };
 

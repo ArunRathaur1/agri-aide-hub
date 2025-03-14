@@ -1,3 +1,4 @@
+
 "use client"; // Required for Next.js if using Client Components
 import React, { useState, useEffect } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -12,6 +13,7 @@ export default function Landselling() {
   const [activeTab, setActiveTab] = useState("map");
   const [listings, setListings] = useState<LandListing[]>([]);
   const { toast } = useToast();
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
 
   // Load listings from local storage on component mount
   useEffect(() => {
@@ -23,7 +25,7 @@ export default function Landselling() {
         description: `Loaded ${savedListings.length} land listings from storage.`,
       });
     }
-  }, []);
+  }, [refreshTrigger]);
 
   // Handle tab change
   const handleTabChange = (value: string) => {
@@ -63,6 +65,13 @@ export default function Landselling() {
 
     // Switch to map view
     handleTabChange("map");
+    
+    // Trigger refresh
+    setRefreshTrigger(prev => prev + 1);
+  };
+  
+  const handleListingAdded = () => {
+    setRefreshTrigger(prev => prev + 1);
   };
 
   return (
@@ -96,7 +105,11 @@ export default function Landselling() {
             className="space-y-4"
             forceMount={activeTab === "add" ? true : undefined}
           >
-            <AddListing activeTab={activeTab} onAddListing={handleAddListing} />
+            <AddListing 
+              activeTab={activeTab} 
+              onAddListing={handleAddListing}
+              onListingAdded={handleListingAdded} 
+            />
           </TabsContent>
         </Tabs>
       </div>
